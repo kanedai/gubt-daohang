@@ -99,7 +99,7 @@ src/
 - `/volume1/docker/gubt-daohang/data.json`
 - `/volume1/docker/gubt-daohang/uploads/`
 
-### 命令行运行（可在群晖 SSH 终端执行）
+### 命令行运行（可在群晖 SSH 终端执行 ）
 
 ```bash
 # 1) 准备宿主持久化目录
