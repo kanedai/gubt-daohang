@@ -51,6 +51,34 @@
         "url": "https://nas.cdgl.ltd:3001/public/dashboard/1a0e0392-afbc-44ea-a087-9d0619897a82?%25E5%25BA%2593%25E4%25BD%258D=",
         "description": "批量盘存用",
         "icon": "/uploads/ab1fead8-aaff-4ea3-b5ab-b37656c5830d.png"
+      },
+      {
+        "id": "3b116be9-9444-48fb-b30a-624fd734ed65",
+        "title": "标签打印",
+        "url": "https://nas.cdgl.ltd:7001/tools/label_printing/",
+        "description": "",
+        "icon": "/uploads/801d2f94-4371-4e81-ae50-6f13b3ca8f9f.jpg"
+      },
+      {
+        "id": "1d6db09e-950f-4bbb-bde3-3f9c86473e04",
+        "title": "唛头打印",
+        "url": "https://aps.cdgl.ltd/app/label-print/mark-68a9224886997d3a2ba684f4",
+        "description": "",
+        "icon": "/uploads/090072bd-d23c-4d92-968f-0b224848a64a.jpg"
+      },
+      {
+        "id": "c2e9141d-3296-4106-9cfd-f45f978e5c48",
+        "title": "Teambition",
+        "url": "https://www.teambition.com/organization/5ce2171ca4e87d0001c85114/my",
+        "description": "",
+        "icon": "https://www.google.com/s2/favicons?domain=www.teambition.com&sz=128"
+      },
+      {
+        "id": "d97983ae-7ebe-42a6-bb7f-b5eceb7285aa",
+        "title": "群晖相册",
+        "url": "https://nas.cdgl.ltd:58501/?launchApp=SYNO.Foto.Sharing.AppInstance&app_name=SYNO.Foto.AppInstance&photos_action=external_login#/signin",
+        "description": "",
+        "icon": "/uploads/c7f3f073-094d-47b1-bb5d-61fcbd459355.png"
       }
     ]
   },
@@ -64,6 +92,13 @@
         "url": "https://chatgpt.com",
         "description": "通用人工智能",
         "icon": "https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128"
+      },
+      {
+        "id": "a38418a6-8f1e-441b-8849-aae5c6c721fa",
+        "title": "超强文档AI",
+        "url": "https://notebooklm.google/",
+        "description": "",
+        "icon": "https://www.google.com/s2/favicons?domain=notebooklm.google&sz=128"
       }
     ]
   },
@@ -77,6 +112,20 @@
         "url": "https://www.164580.com/",
         "description": "紧固件标件查询",
         "icon": "https://www.google.com/s2/favicons?domain=www.164580.com&sz=128"
+      },
+      {
+        "id": "ff983f10-9c9a-4700-997a-c4808361b08c",
+        "title": "阿里邮箱(LKW)",
+        "url": "https://qiye.aliyun.com/",
+        "description": "",
+        "icon": "/uploads/d36f6eaf-eb96-4000-b580-ad9e8723eda2.png"
+      },
+      {
+        "id": "ba9b1f01-6e3d-487c-8338-3eca19b728a9",
+        "title": "OUTLOOK(GUBT)",
+        "url": "https://outlook.office.com/",
+        "description": "",
+        "icon": "https://www.google.com/s2/favicons?domain=outlook.office.com&sz=128"
       }
     ]
   }

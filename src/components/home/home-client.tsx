@@ -49,7 +49,7 @@ export default function HomeClient({ initialData, isAdmin = false }: { initialDa
                     <div className="mb-4">
                         <GlassCard className="p-3">
                             <div className="flex items-center justify-between">
-                                <h3 className="text-xs font-semibold text-muted-foreground">新增分类</h3>
+                                <h3 className="text-xs font-semibold text-muted-foreground">管理分类</h3>
                                 <AddCategoryForm />
                             </div>
                         </GlassCard>
@@ -71,45 +71,57 @@ export default function HomeClient({ initialData, isAdmin = false }: { initialDa
                         </div>
 
                         <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8 gap-x-4 gap-y-8">
-                            {category.links.map((link) => (
-                                <div key={link.id} className="group relative flex flex-col items-center">
-                                    <a
-                                        href={link.url}
-                                        target={isAdmin ? "_self" : "_blank"}
-                                        rel="noopener noreferrer"
-                                        className="block w-full"
-                                        title={link.description || link.title}
-                                    >
-                                        <div className="flex flex-col items-center gap-3 transition-transform duration-300 group-hover:scale-105">
-                                            {/* macOS Dashboard Style Icon */}
-                                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[1.2rem] bg-background/80 backdrop-blur-md border border-white/10 flex items-center justify-center overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:border-primary/20 transition-all duration-300 relative bg-gradient-to-br from-white/5 to-white/0">
-                                                {link.icon && (link.icon.startsWith("http") || link.icon.startsWith("/")) ? (
-                                                    <img src={link.icon} alt={link.title} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <span className="text-2xl font-bold text-primary/80">{link.title.charAt(0).toUpperCase()}</span>
-                                                )}
-                                            </div>
-                                            {/* Minimal Text Label */}
-                                            <h3 className="text-xs sm:text-sm font-medium text-center text-muted-foreground group-hover:text-foreground transition-colors line-clamp-1 w-full px-1">
-                                                {link.title}
-                                            </h3>
+                            {category.links.map((link) => {
+                                const CardContent = (
+                                    <div className="flex flex-col items-center gap-3 transition-transform duration-300 group-hover:scale-105">
+                                        {/* macOS Dashboard Style Icon */}
+                                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[1.2rem] bg-background/80 backdrop-blur-md border border-white/10 flex items-center justify-center overflow-hidden shadow-lg group-hover:shadow-2xl group-hover:border-primary/20 transition-all duration-300 relative bg-gradient-to-br from-white/5 to-white/0">
+                                            {link.icon && (link.icon.startsWith("http") || link.icon.startsWith("/")) ? (
+                                                <img src={link.icon} alt={link.title} className="w-full h-full object-cover" />
+                                            ) : (
+                                                <span className="text-2xl font-bold text-primary/80">{link.title.charAt(0).toUpperCase()}</span>
+                                            )}
                                         </div>
-                                    </a>
+                                        {/* Minimal Text Label */}
+                                        <h3 className="text-xs sm:text-sm font-medium text-center text-muted-foreground group-hover:text-foreground transition-colors line-clamp-1 w-full px-1">
+                                            {link.title}
+                                        </h3>
+                                    </div>
+                                );
 
-                                    {isAdmin && isEdit && (
-                                        <div className="absolute -top-2 -right-2 flex gap-1 z-10">
-                                            <div className="bg-background shadow-sm rounded-full p-0.5 border border-border">
-                                                <EditLinkForm overlay categoryId={category.id} link={link} categories={initialData} />
+                                return (
+                                    <div key={link.id} className="group relative flex flex-col items-center">
+                                        {isAdmin && isEdit ? (
+                                            <EditLinkForm
+                                                categoryId={category.id}
+                                                link={link}
+                                                categories={initialData}
+                                                trigger={CardContent}
+                                            />
+                                        ) : (
+                                            <a
+                                                href={link.url}
+                                                target={isAdmin ? "_self" : "_blank"}
+                                                rel="noopener noreferrer"
+                                                className="block w-full"
+                                                title={link.description || link.title}
+                                            >
+                                                {CardContent}
+                                            </a>
+                                        )}
+
+                                        {isAdmin && isEdit && (
+                                            <div className="absolute -top-2 -right-2 flex gap-1 z-10">
+                                                <div className="bg-background shadow-sm rounded-full p-0.5 border border-border">
+                                                    <DeleteLinkButton categoryId={category.id} linkId={link.id} />
+                                                </div>
                                             </div>
-                                            <div className="bg-background shadow-sm rounded-full p-0.5 border border-border">
-                                                <DeleteLinkButton categoryId={category.id} linkId={link.id} />
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                        )}
+                                    </div>
+                                );
+                            })}
                             {isAdmin && isEdit && (
-                                <div className="flex flex-col items-center justify-center gap-2 min-h-[100px] opacity-70 hover:opacity-100 transition-opacity cursor-pointer">
+                                <div className="flex flex-col items-center justify-center gap-2 min-h-[100px] opacity-70 hover:opacity-100 transition-opacity">
                                     <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-[1.2rem] border-2 border-dashed border-muted-foreground/30 flex items-center justify-center">
                                         <AddLinkForm categoryId={category.id} />
                                     </div>
