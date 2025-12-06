@@ -1,0 +1,14 @@
+<svg width="8391" height="6548.999999999999" xmlns="http://www.w3.org/2000/svg" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd">
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="6551" width="8393" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path id="svg_2" fill="#f08519" d="m136.72,4760.9c500.3,-1924.41 2288.99,-3254.26 3985.52,-3254.26l3858.18,0l410.08,-1497.18l-4110.62,-5.4c-2582.07,-106.03 -4866.85,2565.37 -4143.16,4756.83l0,0.01z"/>
+  <g id="svg_3" fill="#757475">
+   <path id="svg_6" d="m2282.95,6548.86l4361.82,-9.96l1087.87,-4061.04c-2584.47,8.53 -1357.26,-1.45 -3478.77,-1.45c-255.86,0 -680.59,84.91 -946.87,699.95l-173.71,648.49l2257.48,9.61l-313.01,1168.46l-1890.37,0c-1290.08,58.3 -1589.09,-1246.94 -1101.96,-2185.62c-1791.57,1133.4 -1823.12,3651.04 197.52,3731.56z"/>
+  </g>
+ </g>
+</svg>

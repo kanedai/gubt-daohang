@@ -1,0 +1,69 @@
+[
+  {
+    "id": "corp-systems",
+    "title": "内部应用",
+    "links": [
+      {
+        "id": "7cf6daa0-122a-482c-b828-b9f931536355",
+        "title": "生产历史查询",
+        "url": "https://nas.cdgl.ltd:3001/public/dashboard/bff1d111-3264-402c-8d86-6c0a7c2aed4f?%25E7%2589%25A9%25E6%2596%2599%25E5%258F%25B7=",
+        "description": "",
+        "icon": "/uploads/ab1fead8-aaff-4ea3-b5ab-b37656c5830d.png"
+      },
+      {
+        "id": "ccaf403e-126e-4dab-876d-81be5d45c8a8",
+        "title": "PDM",
+        "url": "https://plm.cdgl.ltd/SOLIDWORKSPDM/SPARK_PDM",
+        "description": "PDM 网页版本",
+        "icon": "/uploads/f5e36cf2-7e65-4755-b63d-668234dc0f55.webp"
+      },
+      {
+        "id": "964328a6-e24e-437b-a06f-c83801e7cc51",
+        "title": "群晖网盘",
+        "url": "https://nas.cdgl.ltd:58501/?launchApp=SYNO.SDS.Drive.Application#MyDrive",
+        "description": "企业内部云盘与本地群晖客户端同步",
+        "icon": "/uploads/42aeeaf4-064e-4d15-8c6c-19119afa2739.png"
+      },
+      {
+        "id": "7d0044b8-ff88-46a1-87df-7a8c64edecc4",
+        "title": "Stirling PDF",
+        "url": "https://nas.cdgl.ltd:3012/?lang=zh_CN",
+        "description": "PDF工具",
+        "icon": "/uploads/4bf83aef-35a4-4925-b4c1-db57dd77e21c.png"
+      },
+      {
+        "id": "d182573c-f9ca-41ed-8750-77c9362b1666",
+        "title": "永华管接头计算器",
+        "url": "http://192.168.199.68:5173/",
+        "description": "",
+        "icon": "/uploads/93335b1a-e63a-4d8e-bf54-564f052f49c7.png"
+      }
+    ]
+  },
+  {
+    "id": "6bce8bd3-2e67-4775-8ce5-ffa1d1f706b1",
+    "title": "AI",
+    "links": [
+      {
+        "id": "171e0a33-34f9-4f96-88db-b11cd5a93ea7",
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com",
+        "description": "通用人工智能",
+        "icon": "https://www.google.com/s2/favicons?domain=chatgpt.com&sz=128"
+      }
+    ]
+  },
+  {
+    "id": "54f2c87c-0883-4490-93d3-cc6902edd59a",
+    "title": "参考",
+    "links": [
+      {
+        "id": "5552c578-be09-4e4c-8a5e-49dd335758cd",
+        "title": "易紧通",
+        "url": "https://www.164580.com/",
+        "description": "紧固件标件查询",
+        "icon": "https://www.google.com/s2/favicons?domain=www.164580.com&sz=128"
+      }
+    ]
+  }
+]
