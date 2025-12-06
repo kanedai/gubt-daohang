@@ -102,7 +102,7 @@ import { X, ChevronDown } from "lucide-react";
 
 import { createPortal } from "react-dom";
 
-export function EditLinkForm({ categoryId, link, categories }: { categoryId: string, link: NavLink, categories: Category[] }) {
+export function EditLinkForm({ categoryId, link, categories, overlay = false }: { categoryId: string, link: NavLink, categories: Category[]; overlay?: boolean }) {
     const [isOpen, setIsOpen] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -120,8 +120,13 @@ export function EditLinkForm({ categoryId, link, categories }: { categoryId: str
 
     return (
         <>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)} className="h-8 w-8 text-muted-foreground hover:text-primary">
-                <Edit2 className="w-4 h-4" />
+            <Button
+                variant="ghost"
+                size={overlay ? undefined : "icon"}
+                onClick={() => setIsOpen(true)}
+                className={overlay ? "absolute inset-0 w-full h-full opacity-0" : "h-8 w-8 text-muted-foreground hover:text-primary"}
+            >
+                {!overlay && <Edit2 className="w-4 h-4" />}
             </Button>
 
             {mounted && isOpen && createPortal(

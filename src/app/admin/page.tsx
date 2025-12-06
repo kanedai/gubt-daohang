@@ -55,25 +55,24 @@ export default async function AdminDashboard() {
                     {categories.map((category) => (
                         <GlassCard key={category.id} className="overflow-hidden">
                             <div className="bg-muted/30 px-4 py-3 flex items-center justify-between border-b border-white/5">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-2">
                                     <span className="font-bold text-base">{category.title}</span>
+                                    <EditCategoryForm category={category} />
                                     <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-primary/10 text-primary font-medium">
                                         {category.links.length}
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <AddLinkForm categoryId={category.id} />
-                                    <div className="w-px h-3 bg-border mx-1" />
-                                    <EditCategoryForm category={category} />
                                     <DeleteCategoryButton categoryId={category.id} />
                                 </div>
                             </div>
 
-                            <div className="p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                            <div className="p-4 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-3">
                                 {category.links.map((link) => (
                                     <div key={link.id} className="group relative flex items-center gap-3 p-3 rounded-lg border border-border/40 bg-background/50 hover:bg-muted/50 transition-colors">
                                         {/* Flexibly display Icon or Image */}
-                                        <div className="w-8 h-8 shrink-0 rounded-md bg-white/10 flex items-center justify-center overflow-hidden border border-white/5">
+                                        <div className="w-6 h-6 shrink-0 rounded-md bg-white/10 flex items-center justify-center overflow-hidden border border-white/5">
                                             {link.icon && (link.icon.startsWith("http") || link.icon.startsWith("/")) ? (
                                                 <img src={link.icon} alt={link.title} className="w-full h-full object-cover" />
                                             ) : (
@@ -81,7 +80,7 @@ export default async function AdminDashboard() {
                                             )}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <div className="font-medium text-sm truncate leading-tight">{link.title}</div>
+                                            <div className="font-medium text-xs truncate leading-tight">{link.title}</div>
                                             <div className="text-[10px] text-muted-foreground truncate opacity-70 leading-tight">{link.url}</div>
                                         </div>
 

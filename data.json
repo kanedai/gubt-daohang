@@ -37,6 +37,20 @@
         "url": "http://192.168.199.68:5173/",
         "description": "",
         "icon": "/uploads/93335b1a-e63a-4d8e-bf54-564f052f49c7.png"
+      },
+      {
+        "id": "abd7f509-e6ca-4cf9-bf30-c60fa8acaacd",
+        "title": "WIKI",
+        "url": "https://alidocs.dingtalk.com/i/spaces/4BYma039AlWvDXNA/overview",
+        "description": "",
+        "icon": "https://www.google.com/s2/favicons?domain=alidocs.dingtalk.com&sz=128"
+      },
+      {
+        "id": "aa3f6526-3d03-4c62-b695-4d69567365df",
+        "title": "实时库存",
+        "url": "https://nas.cdgl.ltd:3001/public/dashboard/1a0e0392-afbc-44ea-a087-9d0619897a82?%25E5%25BA%2593%25E4%25BD%258D=",
+        "description": "批量盘存用",
+        "icon": "/uploads/ab1fead8-aaff-4ea3-b5ab-b37656c5830d.png"
       }
     ]
   },
