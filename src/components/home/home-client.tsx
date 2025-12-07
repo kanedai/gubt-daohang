@@ -9,6 +9,7 @@ import { AddLinkForm, EditLinkForm, EditCategoryForm, AddCategoryForm } from "@/
 import { DeleteLinkButton } from "@/components/admin/delete-button";
 import { motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
+import { FastTooltip } from "@/components/ui/fast-tooltip";
 
 export default function HomeClient({ initialData, isAdmin = false }: { initialData: Category[]; isAdmin?: boolean }) {
     const [searchQuery, setSearchQuery] = useState("");
@@ -99,15 +100,16 @@ export default function HomeClient({ initialData, isAdmin = false }: { initialDa
                                                 trigger={CardContent}
                                             />
                                         ) : (
-                                            <a
-                                                href={link.url}
-                                                target={isAdmin ? "_self" : "_blank"}
-                                                rel="noopener noreferrer"
-                                                className="block w-full"
-                                                title={link.description || link.title}
-                                            >
-                                                {CardContent}
-                                            </a>
+                                            <FastTooltip content={link.description}>
+                                                <a
+                                                    href={link.url}
+                                                    target={isAdmin ? "_self" : "_blank"}
+                                                    rel="noopener noreferrer"
+                                                    className="block w-full"
+                                                >
+                                                    {CardContent}
+                                                </a>
+                                            </FastTooltip>
                                         )}
 
                                         {isAdmin && isEdit && (

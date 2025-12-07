@@ -20,11 +20,20 @@ export default async function RootLayout({
   const isAdmin = (await cookies()).get("admin_session")?.value === "true";
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Background />
-        <main className="min-h-screen pt-10 pb-10 container mx-auto px-4">
+        <main className="flex-1 container mx-auto px-4 py-10">
           {children}
         </main>
+
+        <footer className="w-full border-t border-border/40 bg-background/50 backdrop-blur-sm">
+          <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
+            <div className="inline-flex items-center gap-2 justify-center opacity-80 hover:opacity-100 transition-opacity">
+              <img src="/favi.svg" alt="logo" className="h-4 w-4" />
+              <span>© {new Date().getFullYear()} 成都固佰特科技有限公司. All Rights Reserved.</span>
+            </div>
+          </div>
+        </footer>
         <FloatingAdminTrigger isAdmin={!!isAdmin} />
       </body>
     </html>
