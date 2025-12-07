@@ -1,11 +1,24 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Box from "@mui/material/Box";
+import { alpha, useTheme } from "@mui/material/styles";
 
 export function Background() {
+    const theme = useTheme();
+
     return (
-        <div className="fixed inset-0 -z-10 overflow-hidden bg-background">
-            <motion.div
+        <Box
+            sx={{
+                position: "fixed",
+                inset: 0,
+                zIndex: -10,
+                overflow: "hidden",
+                bgcolor: "background.default",
+            }}
+        >
+            <Box
+                component={motion.div}
                 animate={{
                     scale: [1, 1.2, 1],
                     opacity: [0.3, 0.5, 0.3],
@@ -17,9 +30,19 @@ export function Background() {
                     repeat: Infinity,
                     ease: "easeInOut",
                 }}
-                className="absolute -top-1/2 -left-1/2 w-[100vw] h-[100vw] bg-primary/20 rounded-full blur-3xl"
+                sx={{
+                    position: "absolute",
+                    top: "-50%",
+                    left: "-50%",
+                    width: "100vw",
+                    height: "100vw",
+                    bgcolor: alpha(theme.palette.primary.main, 0.2),
+                    borderRadius: "50%",
+                    filter: "blur(64px)", // blur-3xl roughly
+                }}
             />
-            <motion.div
+            <Box
+                component={motion.div}
                 animate={{
                     scale: [1, 1.1, 1],
                     opacity: [0.3, 0.5, 0.3],
@@ -32,11 +55,28 @@ export function Background() {
                     ease: "easeInOut",
                     delay: 2,
                 }}
-                className="absolute -bottom-1/2 -right-1/2 w-[100vw] h-[100vw] bg-purple-500/10 rounded-full blur-3xl"
+                sx={{
+                    position: "absolute",
+                    bottom: "-50%",
+                    right: "-50%",
+                    width: "100vw",
+                    height: "100vw",
+                    bgcolor: alpha(theme.palette.secondary.main || "#9c27b0", 0.1), // purple-500 fallback
+                    borderRadius: "50%",
+                    filter: "blur(64px)",
+                }}
             />
 
-            {/* 网格纹理叠加 */}
-            <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.03] invert dark:invert-0" />
-        </div>
+            {/* Grid texture overlay */}
+            <Box
+                sx={{
+                    position: "absolute",
+                    inset: 0,
+                    backgroundImage: "url('/grid.svg')",
+                    opacity: 0.03,
+                    filter: theme.palette.mode === 'light' ? 'invert(1)' : 'none',
+                }}
+            />
+        </Box>
     );
 }

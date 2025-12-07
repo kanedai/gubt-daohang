@@ -1,50 +1,63 @@
 "use client";
 
 import { useState, useActionState, useEffect, ReactNode } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
+// import ChevronDown from "@mui/icons-material/ExpandMore"; // Wrapped in Select
+
 import { addLink, createCategory, updateLink, updateCategory } from "@/lib/actions";
-import { Plus, Edit2, X, ChevronDown } from "lucide-react";
-import { GlassCard } from "@/components/ui/glass-card";
 import { NavLink, Category } from "@/lib/types";
-import { motion, AnimatePresence } from "framer-motion";
-import { createPortal } from "react-dom";
 
 // @ts-ignore
 const initialState = { error: "", success: false };
 
-function Modal({ isOpen, onClose, title, children }: { isOpen: boolean; onClose: () => void; title: string; children: ReactNode }) {
-    if (!isOpen) return null;
-
-    return createPortal(
-        <AnimatePresence>
-            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+function CustomDialog({ isOpen, onClose, title, children }: { isOpen: boolean; onClose: () => void; title: string; children: ReactNode }) {
+    return (
+        <Dialog
+            open={isOpen}
+            onClose={onClose}
+            maxWidth="sm"
+            fullWidth
+            PaperProps={{
+                sx: {
+                    borderRadius: 3,
+                    backdropFilter: 'blur(20px)',
+                    // bgcolor: 'rgba(255,255,255,0.8)' // Let theme handle this or set specifically
+                }
+            }}
+        >
+            <DialogTitle sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant="h6" component="div" fontWeight="bold">
+                    {title}
+                </Typography>
+                <IconButton
+                    aria-label="close"
                     onClick={onClose}
-                    className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                    className="relative w-full max-w-lg z-10"
+                    sx={{ color: (theme) => theme.palette.grey[500] }}
                 >
-                    <GlassCard className="p-6 border-white/20 shadow-2xl">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-purple-600">{title}</h3>
-                            <Button variant="ghost" size="icon" onClick={onClose} className="rounded-full hover:bg-destructive/10 hover:text-destructive">
-                                <X className="w-5 h-5" />
-                            </Button>
-                        </div>
-                        {children}
-                    </GlassCard>
-                </motion.div>
-            </div>
-        </AnimatePresence>,
-        document.body
+                    <CloseIcon />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent dividers>
+                {children}
+            </DialogContent>
+        </Dialog>
     );
 }
 
@@ -61,23 +74,41 @@ export function AddCategoryForm() {
 
     return (
         <>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)} className="h-6 w-6 rounded-full border border-dashed border-muted-foreground/50 hover:border-primary hover:text-primary">
-                <Plus className="w-3 h-3" />
-            </Button>
+            <IconButton
+                size="small"
+                onClick={() => setIsOpen(true)}
+                sx={{
+                    border: '1px dashed',
+                    borderColor: 'divider',
+                    width: 24,
+                    height: 24,
+                    '&:hover': { borderColor: 'primary.main', color: 'primary.main' }
+                }}
+            >
+                <AddIcon fontSize="small" sx={{ fontSize: 14 }} />
+            </IconButton>
 
-            {isOpen && (
-                <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="新建分类">
-                    <form action={formAction} className="space-y-4">
-                        <Input name="title" placeholder="分类名称 (e.g. 常用工具)" autoFocus required className="bg-muted/30 h-11" />
-                        <div className="flex justify-end gap-3 pt-4 border-t border-border/50">
-                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="h-11 px-6">取消</Button>
-                            <Button type="submit" disabled={isPending} className="h-11 px-8 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
+            <CustomDialog isOpen={isOpen} onClose={() => setIsOpen(false)} title="新建分类">
+                <form action={formAction}>
+                    <Stack spacing={3} sx={{ mt: 1 }}>
+                        <TextField
+                            name="title"
+                            label="分类名称"
+                            placeholder="e.g. 常用工具"
+                            autoFocus
+                            required
+                            fullWidth
+                            variant="outlined"
+                        />
+                        <DialogActions sx={{ px: 0, pb: 0 }}>
+                            <Button onClick={() => setIsOpen(false)}>取消</Button>
+                            <Button type="submit" variant="contained" disabled={isPending}>
                                 {isPending ? "创建中..." : "创建"}
                             </Button>
-                        </div>
-                    </form>
-                </Modal>
-            )}
+                        </DialogActions>
+                    </Stack>
+                </form>
+            </CustomDialog>
         </>
     );
 }
@@ -96,38 +127,39 @@ export function AddLinkForm({ categoryId }: { categoryId: string }) {
 
     return (
         <>
-            <div onClick={() => setIsOpen(true)} className="cursor-pointer w-full h-full flex items-center justify-center">
-                <Plus className="w-6 h-6 text-muted-foreground" />
-            </div>
+            <Box onClick={() => setIsOpen(true)} sx={{ cursor: 'pointer', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <AddIcon sx={{ color: 'text.secondary' }} />
+            </Box>
 
-            {isOpen && (
-                <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="添加链接">
-                    <form action={formAction} className="space-y-5">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Input name="title" placeholder="网站名称" required className="bg-muted/30 h-11" />
-                            <Input name="url" placeholder="URL (https://...)" required className="bg-muted/30 h-11" />
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Input name="iconUrl" placeholder="图标链接 (可选，支持图片URL)" className="bg-muted/30 h-11" />
-                            <div className="relative">
-                                <Input
-                                    type="file"
-                                    name="iconFile"
-                                    accept="image/*"
-                                    className="bg-muted/30 h-11 pt-2 cursor-pointer file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                                />
-                            </div>
-                        </div>
-                        <Input name="description" placeholder="描述 (可选)" className="bg-muted/30 h-11" />
-                        <div className="flex justify-end gap-3 pt-4 border-t border-border/50">
-                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="h-11 px-6">取消</Button>
-                            <Button type="submit" disabled={isPending} className="h-11 px-8 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
+            <CustomDialog isOpen={isOpen} onClose={() => setIsOpen(false)} title="添加链接">
+                <form action={formAction}>
+                    <Stack spacing={2} sx={{ mt: 1 }}>
+                        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+                            <TextField name="title" label="网站名称" required fullWidth />
+                            <TextField name="url" label="URL" placeholder="https://..." required fullWidth />
+                        </Box>
+                        <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+                            <TextField name="iconUrl" label="图标链接 (可选)" placeholder="图片URL" fullWidth />
+                            <TextField
+                                type="file"
+                                name="iconFile"
+                                label="上传图标"
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={{ accept: "image/*" }}
+                                fullWidth
+                            />
+                        </Box>
+                        <TextField name="description" label="描述 (可选)" fullWidth />
+
+                        <DialogActions sx={{ px: 0, pb: 0 }}>
+                            <Button onClick={() => setIsOpen(false)}>取消</Button>
+                            <Button type="submit" variant="contained" disabled={isPending}>
                                 {isPending ? "保存中..." : "保存"}
                             </Button>
-                        </div>
-                    </form>
-                </Modal>
-            )}
+                        </DialogActions>
+                    </Stack>
+                </form>
+            </CustomDialog>
         </>
     );
 }
@@ -150,80 +182,62 @@ export function EditLinkForm({ categoryId, link, categories, overlay = false, tr
     return (
         <>
             {trigger ? (
-                <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(true); }} className="cursor-pointer">
+                <Box onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(true); }} sx={{ cursor: "pointer" }}>
                     {trigger}
-                </div>
+                </Box>
             ) : (
-                <Button
-                    variant="ghost"
-                    size={overlay ? undefined : "icon"}
+                <IconButton
+                    size="small"
                     onClick={() => setIsOpen(true)}
-                    className={overlay ? "absolute inset-0 w-full h-full opacity-0" : "h-8 w-8 text-muted-foreground hover:text-primary"}
+                    sx={overlay ? { position: 'absolute', inset: 0, opacity: 0, width: '100%', height: '100%', borderRadius: 0 } : {}}
                 >
-                    {!overlay && <Edit2 className="w-4 h-4" />}
-                </Button>
+                    {!overlay && <EditIcon fontSize="small" />}
+                </IconButton>
             )}
 
-            {mounted && isOpen && (
-                <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="编辑链接">
-                    <form action={formAction} className="space-y-5">
-                        <div className="space-y-4">
-                            <div className="space-y-1.5">
-                                <label className="text-sm font-medium text-muted-foreground ml-1">所属分类</label>
-                                <div className="relative">
-                                    <select
-                                        name="categoryId"
-                                        defaultValue={categoryId}
-                                        className="w-full h-11 rounded-lg border border-input bg-muted/30 px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary/50 appearance-none cursor-pointer hover:bg-muted/50 transition-colors"
-                                    >
-                                        {categories.map(c => (
-                                            <option key={c.id} value={c.id}>{c.title}</option>
-                                        ))}
-                                    </select>
-                                    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-                                </div>
-                            </div>
+            {mounted && (
+                <CustomDialog isOpen={isOpen} onClose={() => setIsOpen(false)} title="编辑链接">
+                    <form action={formAction}>
+                        <Stack spacing={2} sx={{ mt: 1 }}>
+                            <FormControl fullWidth>
+                                <InputLabel>所属分类</InputLabel>
+                                <Select
+                                    name="categoryId"
+                                    defaultValue={categoryId}
+                                    label="所属分类"
+                                >
+                                    {categories.map(c => (
+                                        <MenuItem key={c.id} value={c.id}>{c.title}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
 
-                            <div className="space-y-1.5">
-                                <label className="text-sm font-medium text-muted-foreground ml-1">网站名称</label>
-                                <Input name="title" defaultValue={link.title} placeholder="例如：Google" required className="bg-muted/30 h-11" />
-                            </div>
+                            <TextField name="title" defaultValue={link.title} label="网站名称" required fullWidth />
+                            <TextField name="url" defaultValue={link.url} label="URL" required fullWidth />
 
-                            <div className="space-y-1.5">
-                                <label className="text-sm font-medium text-muted-foreground ml-1">链接地址 (URL)</label>
-                                <Input name="url" defaultValue={link.url} placeholder="https://..." required className="bg-muted/30 h-11" />
-                            </div>
+                            <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 2 }}>
+                                <TextField name="iconUrl" defaultValue={link.icon?.startsWith('http') ? link.icon : ''} label="图标链接" fullWidth />
+                                <TextField
+                                    type="file"
+                                    name="iconFile"
+                                    label="更换图标 (覆盖链接)"
+                                    InputLabelProps={{ shrink: true }}
+                                    inputProps={{ accept: "image/*" }}
+                                    fullWidth
+                                />
+                            </Box>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1.5">
-                                    <label className="text-sm font-medium text-muted-foreground ml-1">图标链接 (可选)</label>
-                                    <Input name="iconUrl" defaultValue={link.icon?.startsWith('http') ? link.icon : ''} placeholder="图片URL..." className="bg-muted/30 h-11" />
-                                </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-sm font-medium text-muted-foreground ml-1">上传图标 (覆盖链接)</label>
-                                    <Input
-                                        type="file"
-                                        name="iconFile"
-                                        accept="image/*"
-                                        className="bg-muted/30 h-11 pt-2 cursor-pointer file:mr-4 file:py-1 file:px-2 file:rounded-md file:border-0 file:text-xs file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-                                    />
-                                </div>
-                            </div>
+                            <TextField name="description" defaultValue={link.description} label="描述" fullWidth />
 
-                            <div className="space-y-1.5">
-                                <label className="text-sm font-medium text-muted-foreground ml-1">描述 (可选)</label>
-                                <Input name="description" defaultValue={link.description} placeholder="简短描述该链接的作用..." className="bg-muted/30 h-11" />
-                            </div>
-                        </div>
-
-                        <div className="flex justify-end gap-3 pt-4 border-t border-border/50">
-                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="h-11 px-6">取消</Button>
-                            <Button type="submit" disabled={isPending} className="h-11 px-8 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
-                                {isPending ? "保存中..." : "确认保存"}
-                            </Button>
-                        </div>
+                            <DialogActions sx={{ px: 0, pb: 0 }}>
+                                <Button onClick={() => setIsOpen(false)}>取消</Button>
+                                <Button type="submit" variant="contained" disabled={isPending}>
+                                    {isPending ? "保存中..." : "确认保存"}
+                                </Button>
+                            </DialogActions>
+                        </Stack>
                     </form>
-                </Modal>
+                </CustomDialog>
             )}
         </>
     );
@@ -246,26 +260,25 @@ export function EditCategoryForm({ category }: { category: Category }) {
 
     return (
         <>
-            <Button variant="ghost" size="icon" onClick={() => setIsOpen(true)} className="h-6 w-6 text-muted-foreground hover:text-primary">
-                <Edit2 className="w-3 h-3" />
-            </Button>
+            <IconButton size="small" onClick={() => setIsOpen(true)} sx={{ color: 'text.secondary', '&:hover': { color: 'primary.main' } }}>
+                <EditIcon sx={{ fontSize: 14 }} />
+            </IconButton>
 
-            {mounted && isOpen && (
-                <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="重命名分类">
-                    <form action={formAction} className="space-y-5">
-                        <div className="space-y-1.5">
-                            <label className="text-sm font-medium text-muted-foreground ml-1">分类名称</label>
-                            <Input name="title" defaultValue={category.title} placeholder="分类名称" required className="bg-muted/30 h-11" />
-                        </div>
+            {mounted && (
+                <CustomDialog isOpen={isOpen} onClose={() => setIsOpen(false)} title="重命名分类">
+                    <form action={formAction}>
+                        <Stack spacing={3} sx={{ mt: 1 }}>
+                            <TextField name="title" defaultValue={category.title} label="分类名称" required fullWidth />
 
-                        <div className="flex justify-end gap-3 pt-4 border-t border-border/50">
-                            <Button type="button" variant="ghost" onClick={() => setIsOpen(false)} className="h-11 px-6">取消</Button>
-                            <Button type="submit" disabled={isPending} className="h-11 px-8 bg-gradient-to-r from-primary to-purple-600 hover:opacity-90 transition-opacity">
-                                {isPending ? "保存" : "确认修改"}
-                            </Button>
-                        </div>
+                            <DialogActions sx={{ px: 0, pb: 0 }}>
+                                <Button onClick={() => setIsOpen(false)}>取消</Button>
+                                <Button type="submit" variant="contained" disabled={isPending}>
+                                    {isPending ? "保存" : "确认修改"}
+                                </Button>
+                            </DialogActions>
+                        </Stack>
                     </form>
-                </Modal>
+                </CustomDialog>
             )}
         </>
     );

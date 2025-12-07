@@ -1,24 +1,44 @@
+"use client";
+
 import * as React from "react";
-import { cn } from "@/lib/utils";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
 
-export interface InputProps
-    extends React.InputHTMLAttributes<HTMLInputElement> { }
+export type InputProps = TextFieldProps & {
+    // Add any specific props if needed
+};
 
-/**
- * 输入框组件
- * 具有透明背景和精致的聚焦边框效果
- */
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-    ({ className, type, ...props }, ref) => {
+const StyledTextField = styled(TextField)(({ theme }) => ({
+    '& .MuiInputBase-root': {
+        backgroundColor: alpha(theme.palette.common.white, 0.05),
+        backdropFilter: 'blur(10px)',
+        transition: theme.transitions.create(['background-color', 'box-shadow']),
+        '&:hover': {
+            backgroundColor: alpha(theme.palette.common.white, 0.1),
+        },
+        '&.Mui-focused': {
+            backgroundColor: alpha(theme.palette.common.white, 0.15),
+        }
+    },
+    '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: alpha(theme.palette.common.white, 0.2),
+    },
+    '&:hover .MuiOutlinedInput-notchedOutline': {
+        borderColor: alpha(theme.palette.common.white, 0.3),
+    }
+}));
+
+import { alpha } from "@mui/material/styles";
+
+export const Input = React.forwardRef<HTMLDivElement, InputProps>(
+    ({ className, variant = "outlined", ...props }, ref) => {
         return (
-            <input
-                type={type}
-                className={cn(
-                    "flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-                    "glass bg-white/5 focus:bg-white/10 transition-all duration-200", // Glass effect enhancements
-                    className
-                )}
+            <StyledTextField
                 ref={ref}
+                variant={variant}
+                fullWidth
+                size="small"
+                className={className}
                 {...props}
             />
         );

@@ -1,43 +1,72 @@
-import * as React from "react";
-import { cn } from "@/lib/utils";
+"use client";
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+import * as React from "react";
+import MuiButton, { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+import { alpha, styled } from "@mui/material/styles";
+
+interface ButtonProps extends Omit<MuiButtonProps, "variant" | "size"> {
     variant?: "primary" | "secondary" | "ghost" | "destructive" | "outline";
     size?: "sm" | "md" | "lg" | "icon";
 }
 
-/**
- * 通用按钮组件
- * 提供多种预设样式 (Variant) 和尺寸 (Size)
- */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant = "primary", size = "md", ...props }, ref) => {
-        const variants = {
-            primary: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg hover:shadow-primary/20",
-            secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-            ghost: "hover:bg-accent hover:text-accent-foreground",
-            destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-            outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        };
+const StyledButton = styled(MuiButton)(({ theme }) => ({
+    // Common overrides if needed
+}));
 
-        const sizes = {
-            sm: "h-9 px-3 text-xs rounded-md",
-            md: "h-10 px-4 py-2 rounded-md",
-            lg: "h-12 px-8 text-lg rounded-lg",
-            icon: "h-10 w-10 p-2 rounded-full",
-        };
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+    ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
+        // Map custom variants to MUI props
+        let muiVariant: MuiButtonProps["variant"] = "contained";
+        let muiColor: MuiButtonProps["color"] = "primary";
+        let sx = {};
+
+        switch (variant) {
+            case "primary":
+                muiVariant = "contained";
+                muiColor = "primary";
+                break;
+            case "secondary":
+                muiVariant = "contained";
+                muiColor = "secondary";
+                break;
+            case "ghost":
+                muiVariant = "text";
+                muiColor = "primary"; // or inherit
+                break;
+            case "destructive":
+                muiVariant = "contained";
+                muiColor = "error";
+                break;
+            case "outline":
+                muiVariant = "outlined";
+                muiColor = "primary"; // or inherit
+                break;
+        }
+
+        // Map sizes
+        let muiSize: MuiButtonProps["size"] = "medium";
+        if (size === "sm") muiSize = "small";
+        if (size === "lg") muiSize = "large";
+
+        // Icon size handling might need custom sx if "icon" size is strictly defined as square
+        if (size === "icon") {
+            muiSize = "medium";
+            sx = { minWidth: 40, width: 40, p: 0, borderRadius: '50%' };
+        }
 
         return (
-            <button
+            <MuiButton
                 ref={ref}
-                className={cn(
-                    "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
-                    variants[variant],
-                    sizes[size],
-                    className
-                )}
+                variant={muiVariant}
+                color={muiColor}
+                size={muiSize}
+                sx={sx}
+                className={className} // Pass className for any residual Tailwind usage or overrides
+                disableElevation={variant === "ghost"}
                 {...props}
-            />
+            >
+                {children}
+            </MuiButton>
         );
     }
 );

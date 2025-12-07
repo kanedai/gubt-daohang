@@ -1,7 +1,14 @@
 "use client";
 
-import { Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import SettingsIcon from "@mui/icons-material/Settings";
+import Fab from "@mui/material/Fab";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+
 import { useActionState, useState, useEffect } from "react";
 import { loginInline, logout } from "@/lib/actions";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -38,60 +45,103 @@ export function FloatingAdminTrigger({ isAdmin = false }: { isAdmin?: boolean })
             }
         }
     }, [state]);
+
     return (
-        <>
-            <div className="fixed bottom-6 right-6 z-50">
-                <div className="flex items-center gap-2">
-                    {!isAdmin && (
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full w-10 h-10 bg-background/50 backdrop-blur shadow-sm border-border/50"
-                            onClick={() => setOpen((v) => !v)}
-                        >
-                            <Settings className="w-4 h-4 text-muted-foreground" />
-                        </Button>
-                    )}
-                    {isAdmin && (
-                        <div className="flex items-center gap-2">
-                            {/* 视角指示与切换：用户 / 编辑 */}
-                            <Button
-                                variant={!editMode ? "primary" : "outline"}
-                                size="sm"
-                                className={"rounded-full px-3 h-9"}
-                                onClick={() => setEdit(false)}
-                            >
-                                用户
-                            </Button>
-                            <Button
-                                variant={editMode ? "primary" : "outline"}
-                                size="sm"
-                                className={"rounded-full px-3 h-9"}
-                                onClick={() => setEdit(true)}
-                            >
-                                编辑
-                            </Button>
-                            {/* 任何页面提供退出管理员 */}
-                            <form action={logout}>
-                                <Button variant="ghost" size="sm" className="rounded-full px-3 h-9 text-muted-foreground hover:text-destructive">退出管理员</Button>
-                            </form>
-                        </div>
-                    )}
-                </div>
-                {!isAdmin && open && (
-                    <div className="mt-2 p-3 rounded-xl border border-white/10 bg-background/80 backdrop-blur shadow-lg w-64">
-                        <form action={formAction} className="space-y-2">
-                            <input name="password" type="password" placeholder="管理员密码" className="w-full h-9 rounded-md px-3 bg-background border border-white/10" />
-                            {state?.error && <div className="text-[12px] text-destructive">{state.error}</div>}
-                            <div className="flex gap-2">
-                                <Button type="submit" size="sm" className="flex-1" disabled={isPending}>登录</Button>
-                                <Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)}>取消</Button>
-                            </div>
-                            <div className="text-[11px] text-muted-foreground">登录后可在首页直接管理链接</div>
-                        </form>
-                    </div>
+        <Box sx={{ position: "fixed", bottom: 24, right: 24, zIndex: 1200 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                {!isAdmin && (
+                    <Fab
+                        size="medium"
+                        color="default" // or 'inherit'
+                        aria-label="admin settings"
+                        onClick={() => setOpen((v) => !v)}
+                        sx={{
+                            backgroundColor: "background.paper",
+                            backdropFilter: "blur(8px)",
+                        }}
+                    >
+                        <SettingsIcon fontSize="small" color="action" />
+                    </Fab>
                 )}
-            </div>
-        </>
+                {isAdmin && (
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                        <Button
+                            variant={!editMode ? "contained" : "outlined"}
+                            size="small"
+                            onClick={() => setEdit(false)}
+                            sx={{ borderRadius: 20 }}
+                        >
+                            用户
+                        </Button>
+                        <Button
+                            variant={editMode ? "contained" : "outlined"}
+                            size="small"
+                            onClick={() => setEdit(true)}
+                            color="secondary" // Highlight edit mode
+                            sx={{ borderRadius: 20 }}
+                        >
+                            编辑
+                        </Button>
+                        <form action={logout}>
+                            <Button
+                                variant="text"
+                                size="small"
+                                sx={{ borderRadius: 20, color: 'text.secondary', '&:hover': { color: 'error.main' } }}
+                                type="submit"
+                            >
+                                退出
+                            </Button>
+                        </form>
+                    </Box>
+                )}
+            </Box>
+
+            {!isAdmin && open && (
+                <Paper
+                    component="form"
+                    action={formAction}
+                    elevation={4}
+                    sx={{
+                        mt: 1,
+                        p: 2,
+                        width: 280,
+                        backgroundColor: "background.paper", // Should pick up glass effect if configured in theme or overridden here
+                        backdropFilter: "blur(12px)",
+                        borderRadius: 2,
+                        position: 'absolute',
+                        bottom: 48,
+                        right: 0,
+                    }}
+                >
+                    <Stack spacing={2}>
+                        <TextField
+                            name="password"
+                            type="password"
+                            placeholder="管理员密码"
+                            fullWidth
+                            size="small"
+                            variant="outlined"
+                            autoFocus
+                        />
+                        {state?.error && (
+                            <Typography variant="caption" color="error">
+                                {state.error}
+                            </Typography>
+                        )}
+                        <Stack direction="row" spacing={1}>
+                            <Button type="submit" variant="contained" size="small" fullWidth disabled={isPending}>
+                                登录
+                            </Button>
+                            <Button type="button" variant="text" size="small" onClick={() => setOpen(false)}>
+                                取消
+                            </Button>
+                        </Stack>
+                        <Typography variant="caption" color="text.secondary" align="center">
+                            登录后可在首页直接管理链接
+                        </Typography>
+                    </Stack>
+                </Paper>
+            )}
+        </Box>
     );
 }

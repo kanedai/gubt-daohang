@@ -1,18 +1,26 @@
 "use client";
 
 import { deleteLink } from "@/lib/actions";
-import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Tooltip from "@mui/material/Tooltip";
 
 export function DeleteLinkButton({ categoryId, linkId }: { categoryId: string, linkId: string }) {
     return (
-        <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 text-muted-foreground hover:text-destructive"
-            onClick={() => deleteLink(categoryId, linkId)}
-        >
-            <Trash2 className="w-4 h-4" />
-        </Button>
+        <Tooltip title="Delete">
+            <IconButton
+                size="small"
+                onClick={() => deleteLink(categoryId, linkId)}
+                sx={{
+                    color: 'text.secondary',
+                    '&:hover': {
+                        color: 'error.main',
+                        bgcolor: 'error.lighter' // or simplified
+                    }
+                }}
+            >
+                <DeleteIcon fontSize="small" />
+            </IconButton>
+        </Tooltip>
     );
 }

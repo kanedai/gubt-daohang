@@ -1,18 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { LayoutGrid } from "lucide-react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import { alpha } from "@mui/material/styles";
 
 export function Navbar() {
     return (
-        <nav className="fixed top-0 w-full z-50 border-b border-white/20 bg-white/5 backdrop-blur-xl">
-            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center gap-2">
-                    <div className="w-8 h-8 flex items-center justify-center">
-                        <img src="/favi.svg" alt="Logo" className="w-full h-full object-contain" />
-                    </div>
-                </Link>
-            </div>
-        </nav>
+        <AppBar
+            position="fixed"
+            elevation={0}
+            sx={{
+                bgcolor: (theme) => alpha(theme.palette.background.default, 0.05),
+                backdropFilter: 'blur(16px)',
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+            }}
+        >
+            <Container maxWidth="xl">
+                <Toolbar disableGutters sx={{ height: 64 }}>
+                    <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                            <Box sx={{ width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <img src="/favi.svg" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                            </Box>
+                        </Box>
+                    </Link>
+                </Toolbar>
+            </Container>
+        </AppBar>
     );
 }
