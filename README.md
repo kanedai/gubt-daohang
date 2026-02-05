@@ -1,152 +1,161 @@
-# GUBT 企业导航门户 (Corporate Navigation Portal)
+# GUBT Corporate Navigation Portal
 
-这是一个现代化、美观且高效的企业内部导航系统。旨在汇聚企业核心资源，提供一键直达的便捷访问体验。
+This is a modern, beautiful, and efficient internal corporate navigation system. Designed to aggregate core corporate resources and provide a convenient one-click access experience.
 
 ![Home Page Preview](./public/uploads/preview-home.png)
 
-## 🌟 核心功能
+## 🌟 Core Features
 
-*   **极速搜索**: 首页核心区域提供全局搜索，快速定位应用或文档。
-*   **现代化 UI 设计**:
-    *   采用 **iOS 风格大图标**，视觉清晰，体验精致。
-    *   **毛玻璃 (Glassmorphism)** 视觉效果，配合细腻的动画交互。
-    *   **响应式布局**: 此系统完美适配各种屏幕尺寸，大屏显示器支持 **一行 5 列** 的高密度展示。
-*   **强大的图标支持**:
-    *   **自动抓取**: 输入 URL，系统自动获取网站 Favicon。
-    *   **本地上传**: 支持直接上传本地图片作为图标（优先显示）。
-    *   **自定义 URL**: 支持输入任意网络图片链接。
-*   **简易管理后台**:
-    *   悬浮式管理入口（右下角），保持页面整洁。
-    *   支持分类的创建、重命名、删除。
-    *   支持链接的添加、编辑、移动分类、删除。
-    *   数据使用本地 JSON 存储，无需配置复杂数据库，易于备份与迁移。
+*   **Fast Search**: Global search in the core area of the homepage to quickly locate applications or documents.
+*   **Modern UI Design**:
+    *   **iOS Style Large Icons**: Clear visuals and exquisite experience.
+    *   **Glassmorphism**: Visual effects with delicate animation interactions.
+    *   **Responsive Layout**: Perfectly adapts to various screen sizes; supports **5 columns per row** high-density display on large screens.
+*   **Powerful Icon Support**:
+    *   **Auto Fetch**: Enter a URL, and the system automatically fetches the website Favicon.
+    *   **Local Upload**: Supports direct upload of local images as icons (priority display).
+    *   **Custom URL**: Supports entering any network image link.
+*   **Simple Admin Dashboard**:
+    *   Floating admin entry (bottom right corner) to keep the page clean.
+    *   Supports creating, renaming, and deleting categories.
+    *   Supports adding, editing, moving, and deleting links.
+    *   Data is stored in local JSON, requiring no complex database configuration, easy to backup and migrate.
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 1. 环境准备
-确保您的电脑已安装 [Node.js](https://nodejs.org/) (推荐 v18+)。
+### 1. Prerequisites
+Ensure your computer has [Node.js](https://nodejs.org/) installed (v18+ recommended).
 
-### 2. 安装依赖
-在项目根目录下运行：
+### 2. Install Dependencies
+Run in the project root directory:
 ```bash
 npm install
-# 或者
+# or
 yarn install
 ```
 
-### 3. 启动开发服务器
+### 3. Start Development Server
 ```bash
 npm run dev
 ```
-启动后，访问 [http://localhost:3000](http://localhost:3000) 即可查看首页。
+After starting, visit [http://localhost:3000](http://localhost:3000) to view the homepage.
 
-## 📖 使用指南
+## 📖 User Guide
 
-### 访问管理后台
-1.  在首页右下角，通过鼠标悬浮可以看到一个锁形图标（或齿轮图标），点击它。
-2.  或者直接访问 [http://localhost:3000/login](http://localhost:3000/login)。
-3.  默认密码：`admin123` (您可以在 `.env` 文件中修改 `ADMIN_PASSWORD`)。
+### Access Admin Dashboard
+1.  In the bottom right corner of the homepage, hover to see a lock icon (or gear icon), click it.
+2.  Or directly visit [http://localhost:3000/login](http://localhost:3000/login).
+3.  Default password: `admin123` (You can modify `ADMIN_PASSWORD` in the `.env` file).
 
-### 内容管理
-*   **添加分类**: 登录后，点击页面右上角的 "新建分类"。
-*   **添加链接**: 在对应分类的卡片右上角点击 `+` 号。
-*   **上传图标**: 在添加或编辑链接时，点击 "选择文件" 上传本地图片，系统会自动保存并应用。
-*   **调整布局**: 链接过多时，系统会自动以网格形式排列（支持 5 列），保持整齐。
+### Content Management
+*   **Add Category**: After logging in, click "New Category" in the top right corner.
+*   **Add Link**: Click the `+` sign in the top right corner of the corresponding category card.
+*   **Upload Icon**: When adding or editing a link, click "Choose File" to upload a local image; the system will automatically save and apply it.
+*   **Adjust Layout**: When there are too many links, the system automatically arranges them in a grid (supports 5 columns) to keep it tidy.
 
-## 🛠 配置与部署
+## 🛠 Configuration & Deployment
 
-### 数据备份
-所有导航数据存储在 `src/lib/data.json` 文件中。您只需定期备份该文件即可保留所有配置。
+### Data Backup
+All navigation data is stored in the `src/lib/data.json` file. You only need to back up this file regularly to preserve all configurations.
 
-### 部署建议
-本项目基于 Next.js 构建，非常适合部署在：
-*   **Vercel** (推荐，零配置)
-*   **Docker 容器**: 使用提供的 `Dockerfile` (如有) 进行构建。
-*   **本地服务器**: 运行 `npm run build` 当后使用 `npm start` 启动生产模式。
+### Deployment Suggestions
+This project is built on Next.js, very suitable for deployment on:
+*   **Vercel** (Recommended, zero configuration)
+*   **Docker Container**: Use the provided `Dockerfile` (if available) for building.
+*   **Local Server**: Run `npm run build` and then use `npm start` to start production mode.
 
-## 📂 项目结构
+## 📂 Project Structure
 ```
 src/
-├── app/              # 页面路由 (Next.js App Router)
-│   ├── page.tsx      # 首页
-│   ├── admin/        # 管理后台
-│   └── login/        # 登录页
-├── components/       # UI 组件
-├── lib/              # 工具函数与数据操作
-│   ├── actions.ts    # Server Actions (后端逻辑)
-│   └── data.json     # 数据存储文件
+├── app/              # Page Routing (Next.js App Router)
+│   ├── page.tsx      # Homepage
+│   ├── admin/        # Admin Dashboard
+│   └── login/        # Login Page
+├── components/       # UI Components
+├── lib/              # Utility Functions & Data Operations
+│   ├── actions.ts    # Server Actions (Backend Logic)
+│   └── data.json     # Data Storage File
 └── ...
 ```
 
 ---
-*Built for GUBT.*
 
-## 🧩 在群晖（Synology DSM）中以容器运行
+## 🏭 About GUBT
 
-> 目标：不使用 docker-compose，直接以容器运行，并持久化数据与上传文件。
+### [GUBT Casting: High-performance wear parts for crushers](https://gubtcasting.com)
 
-### 必要设置
+**GUBT** is a specialized manufacturer of aftermarket wear parts for the mining and quarrying industries. Based in China, we produce over 15,000 spare parts compatible with major crusher brands like Metso, Sandvik, and Symons. Our inventory includes manganese liners, mantle and concave sets, and various mechanical components designed to match or exceed OEM specifications.
 
-- 端口映射：将宿主端口映射到容器端口 `3000`（镜像内已 `EXPOSE 3000`）
-- 环境变量：
-  - `ADMIN_PASSWORD`（管理员登录密码，默认为 `admin123`，建议修改为更安全的值）
-- 持久化挂载（确保重启不丢数据）：
-  - 将宿主机上的 `data.json` 绑定到容器内 `/app/data.json`
-  - 将宿主机上的 `uploads` 目录绑定到容器内 `/app/public/uploads`
+We manage the entire production process in-house—from initial pattern design and casting to final machining and quality control. This vertical integration allows us to maintain tight tolerances and offer shorter lead times than many international distributors. Whether you are running a large-scale mining operation or a local aggregate plant, GUBT provides the durable parts needed to minimize downtime and lower your cost per ton.
 
-推荐在群晖上使用如下宿主路径（可按需调整）：
+---
+
+## 🧩 Run as Container on Synology DSM
+
+> Goal: Run directly as a container without docker-compose, and persist data and uploaded files.
+
+### Necessary Settings
+
+- Port Mapping: Map host port to container port `3000` (image already `EXPOSE 3000`)
+- Environment Variables:
+  - `ADMIN_PASSWORD` (Admin login password, default is `admin123`, recommend changing to a safer value)
+- Persistence Mounts (Ensure data is not lost on restart):
+  - Bind host `data.json` to container `/app/data.json`
+  - Bind host `uploads` directory to container `/app/public/uploads`
+
+Recommended host paths on Synology (adjust as needed):
 
 - `/volume1/docker/gubt-daohang/data.json`
 - `/volume1/docker/gubt-daohang/uploads/`
 
-### 命令行运行（可在群晖 SSH 终端执行 ）
+### Command Line Execution (Run in Synology SSH Terminal)
 
 ```bash
-# 1) 准备宿主持久化目录
+# 1) Prepare host persistence directory
 mkdir -p /volume1/docker/gubt-daohang/uploads
 
-# 如需预置数据，可先创建 data.json（不创建也可以，容器会在首次运行时初始化）
+# If you need preset data, you can create data.json first (optional, container initializes it if missing)
 touch /volume1/docker/gubt-daohang/data.json
 
-# 2) 拉取镜像（将镜像名按需替换）
+# 2) Pull image (replace image name as needed)
 docker pull kanedai1/gubt-daohang:latest
 
-# 3) 运行容器（示例将宿主 3000 映射到容器 3000）
+# 3) Run container (example maps host 3000 to container 3000)
 docker run -d \
   --name gubt-daohang \
   --restart unless-stopped \
   -p 3000:3000 \
-  -e ADMIN_PASSWORD="请填写更安全的密码" \
+  -e ADMIN_PASSWORD="PleaseEnterStrongPassword" \
   -v /volume1/docker/gubt-daohang/data.json:/app/data.json \
   -v /volume1/docker/gubt-daohang/uploads:/app/public/uploads \
   kanedai1/gubt-daohang:latest
 
-# 启动后访问：
-# http://<群晖IP>:3000/
+# After startup, visit:
+# http://<SynologyIP>:3000/
 ```
 
-> 权限提示：容器以 `node` 用户运行（UID 1000）。若上传目录在宿主机上不可写，请在群晖中为该目录赋予写权限，或通过 SSH 执行 `chmod 777 /volume1/docker/gubt-daohang/uploads` 进行快速验证（生产环境请按需收紧权限）。
+> Permission Tip: Container runs as `node` user (UID 1000). If the upload directory is not writable on the host, please grant write permission in Synology, or execute `chmod 777 /volume1/docker/gubt-daohang/uploads` via SSH for quick verification (please tighten permissions as needed for production).
 
-### 通过群晖 Container Manager（图形界面）创建
+### Create via Synology Container Manager (GUI)
 
-- 镜像页选择 `kanedai1/gubt-daohang:latest` → 以此镜像创建容器
-- 端口设置：添加映射 `本地端口:3000` → `容器端口:3000`
-- 环境变量：添加 `ADMIN_PASSWORD=你自己的强密码`
-- 卷（存储）挂载：
-  - 将宿主路径 `/volume1/docker/gubt-daohang/data.json` 绑定到容器路径 `/app/data.json`
-  - 将宿主路径 `/volume1/docker/gubt-daohang/uploads` 绑定到容器路径 `/app/public/uploads`
-- 高级设置：启用重启策略 `unless-stopped`
-- 创建并启动后，访问 `http://<群晖IP>:3000`
+- Image page select `kanedai1/gubt-daohang:latest` -> Create container with this image
+- Port Settings: Add mapping `Local Port:3000` -> `Container Port:3000`
+- Environment Variables: Add `ADMIN_PASSWORD=YourOwnStrongPassword`
+- Volume (Storage) Mounts:
+  - Bind host path `/volume1/docker/gubt-daohang/data.json` to container path `/app/data.json`
+  - Bind host path `/volume1/docker/gubt-daohang/uploads` to container path `/app/public/uploads`
+- Advanced Settings: Enable auto-restart `unless-stopped`
+- After creation and startup, visit `http://<SynologyIP>:3000`
 
-### 可选：多平台镜像构建与推送（适配不同 NAS 架构）
+### Optional: Multi-platform Image Build & Push (Adapt to different NAS architectures)
 
-若你需要自行构建镜像并推送到 Docker Hub（用户名已设为 `kanedai1`），在本机（支持 Buildx）执行：
+If you need to build the image yourself and push to Docker Hub (username set to `kanedai1`), execute on local machine (supports Buildx):
 
 ```bash
-# 登录 Docker Hub
+# Login to Docker Hub
 docker login -u kanedai1
 
-# 使用 Buildx 构建并推送多平台镜像（Apple Silicon 适配 arm64）
+# Build and push multi-platform image using Buildx (Apple Silicon adapts to arm64)
 docker buildx build \
   --platform linux/amd64,linux/arm64 \
   -t kanedai1/gubt-daohang:latest \
@@ -154,4 +163,4 @@ docker buildx build \
   .
 ```
 
-完成后，即可在群晖上拉取并运行该镜像，按照上面的持久化挂载和端口映射进行容器创建。
+After completion, you can pull and run this image on Synology, following the persistence mount and port mapping instructions above for container creation.
